@@ -16,10 +16,10 @@ class GameViewController: UIViewController {
         
         guard let view = self.view as? SKView else { return }
         
-        let scene = GameScene(size: CGSize(width: 375.0, height: 667.0))
-        scene.scaleMode = .aspectFill
+        let scene = MenuScene(size: CGSize(width: 375.0, height: 667.0))
+        scene.scaleMode = .resizeFill
         
-        view.ignoresSiblingOrder = true
+        view.ignoresSiblingOrder = false
         view.showsFPS = true
         view.showsNodeCount = true
         view.presentScene(scene)
