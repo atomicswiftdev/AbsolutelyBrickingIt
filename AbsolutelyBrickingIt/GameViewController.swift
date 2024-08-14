@@ -17,6 +17,7 @@ class GameViewController: UIViewController {
         guard let view = self.view as? SKView else { return }
         
         let scene = MenuScene(size: CGSize(width: 375.0, height: 667.0))
+        scene.coordinator = self
         scene.scaleMode = .resizeFill
         
         view.ignoresSiblingOrder = false
@@ -35,5 +36,12 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+extension GameViewController: MenuSceneCoordinator {
+    
+    func menuScenePlayTapped(_ menuScene: MenuScene) {
+        print("Play tapped!")
     }
 }
