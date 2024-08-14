@@ -7,9 +7,15 @@
 
 import SpriteKit
 
+protocol MenuSceneCoordinator: AnyObject {
+    func menuScenePlayTapped(_ menuScene: MenuScene)
+}
+
 class MenuScene: SKScene {
     
-    var playNode: SKSpriteNode?
+    weak var coordinator: MenuSceneCoordinator?
+    
+    private var playNode: SKSpriteNode?
     
     override func didMove(to view: SKView) {
         let backgroundNode = SKSpriteNode(imageNamed: "background.menu")
@@ -36,7 +42,7 @@ class MenuScene: SKScene {
             let point = touch.location(in: self)
             
             if playNode?.contains(point) == true {
-                print("Play touched")
+                coordinator?.menuScenePlayTapped(self)
             }
         }
     }
