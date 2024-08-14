@@ -9,6 +9,8 @@ import SpriteKit
 
 class MenuScene: SKScene {
     
+    var playNode: SKSpriteNode?
+    
     override func didMove(to view: SKView) {
         let backgroundNode = SKSpriteNode(imageNamed: "background.menu")
         backgroundNode.position = CGPoint(x: 0.5 * size.width, y: 0.5 * size.height)
@@ -26,5 +28,16 @@ class MenuScene: SKScene {
         let playNode = SKSpriteNode(imageNamed: "button.play")
         playNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         addChild(playNode)
+        self.playNode = playNode
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let point = touch.location(in: self)
+            
+            if playNode?.contains(point) == true {
+                print("Play touched")
+            }
+        }
     }
 }
