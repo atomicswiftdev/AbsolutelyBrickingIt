@@ -7,7 +7,13 @@
 
 import SpriteKit
 
+protocol AboutSceneCoordinator: AnyObject {
+    func aboutSceneScreenTapped(_ scene: AboutScene)
+}
+
 class AboutScene: SKScene {
+    
+    weak var coordinator: AboutSceneCoordinator?
     
     override func didMove(to view: SKView) {
         let backgroundNode = SKSpriteNode(imageNamed: "background.menu")
@@ -21,6 +27,10 @@ class AboutScene: SKScene {
         let textNode = SKSpriteNode(imageNamed: "text.about")
         textNode.position = CGPoint(x: 0.5 * size.width, y: 0.4 * size.height)
         addChild(textNode)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        coordinator?.aboutSceneScreenTapped(self)
     }
 }
 

@@ -45,6 +45,7 @@ extension GameViewController: MenuSceneCoordinator {
         guard let view = self.view as? SKView else { return }
         
         let scene = AboutScene(size: CGSize(width: 375.0, height: 667.0))
+        scene.coordinator = self
         scene.scaleMode = .resizeFill
         
         view.presentScene(scene)
@@ -54,6 +55,19 @@ extension GameViewController: MenuSceneCoordinator {
         guard let view = self.view as? SKView else { return }
         
         let scene = GameScene(size: CGSize(width: 375.0, height: 667.0))
+        scene.scaleMode = .resizeFill
+        
+        view.presentScene(scene)
+    }
+}
+
+extension GameViewController: AboutSceneCoordinator {
+    
+    func aboutSceneScreenTapped(_ scene: AboutScene) {
+        guard let view = self.view as? SKView else { return }
+        
+        let scene = MenuScene(size: CGSize(width: 375.0, height: 667.0))
+        scene.coordinator = self
         scene.scaleMode = .resizeFill
         
         view.presentScene(scene)
