@@ -8,13 +8,15 @@
 import SpriteKit
 
 protocol MenuSceneCoordinator: AnyObject {
-    func menuScenePlayTapped(_ menuScene: MenuScene)
+    func menuScenePlayTapped(_ scene: MenuScene)
+    func menuSceneAboutTapped(_ scene: MenuScene)
 }
 
 class MenuScene: SKScene {
     
     weak var coordinator: MenuSceneCoordinator?
     
+    private var aboutNode: SKSpriteNode?
     private var playNode: SKSpriteNode?
     
     override func didMove(to view: SKView) {
@@ -30,6 +32,7 @@ class MenuScene: SKScene {
         let aboutNode = SKSpriteNode(imageNamed: "button.about")
         aboutNode.position = CGPoint(x: 0.5 * size.width, y: 0.32 * size.height)
         addChild(aboutNode)
+        self.aboutNode = aboutNode
         
         let playNode = SKSpriteNode(imageNamed: "button.play")
         playNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
@@ -43,6 +46,8 @@ class MenuScene: SKScene {
             
             if playNode?.contains(point) == true {
                 coordinator?.menuScenePlayTapped(self)
+            } else if aboutNode?.contains(point) == true {
+                coordinator?.menuSceneAboutTapped(self)
             }
         }
     }

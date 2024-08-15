@@ -41,7 +41,16 @@ class GameViewController: UIViewController {
 
 extension GameViewController: MenuSceneCoordinator {
     
-    func menuScenePlayTapped(_ menuScene: MenuScene) {
+    func menuSceneAboutTapped(_ scene: MenuScene) {
+        guard let view = self.view as? SKView else { return }
+        
+        let scene = AboutScene(size: CGSize(width: 375.0, height: 667.0))
+        scene.scaleMode = .resizeFill
+        
+        view.presentScene(scene)
+    }
+    
+    func menuScenePlayTapped(_ scene: MenuScene) {
         guard let view = self.view as? SKView else { return }
         
         let scene = GameScene(size: CGSize(width: 375.0, height: 667.0))
