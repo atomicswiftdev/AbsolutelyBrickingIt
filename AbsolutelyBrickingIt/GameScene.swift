@@ -47,9 +47,21 @@ class GameScene: SKScene {
         guard let paddleNode,
               let lastTouchLocation else { return }
         
-        paddleNode.position = CGPoint(
-            x: paddleNode.position.x + point.x - lastTouchLocation.x,
-            y: paddleNode.position.y)
+        let destinationX = clamp(
+            value: paddleNode.position.x + point.x - lastTouchLocation.x,
+            min: paddleNode.size.width * 0.5,
+            max: size.width - paddleNode.size.width * 0.5)
+        paddleNode.position = CGPoint(x: destinationX, y: paddleNode.position.y)
         self.lastTouchLocation = point
+    }
+    
+    private func clamp(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+        if value < min {
+            return min
+        } else if value > max {
+            return max
+        } else {
+            return value
+        }
     }
 }
