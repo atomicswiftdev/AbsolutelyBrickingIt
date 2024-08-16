@@ -15,6 +15,9 @@ class GameScene: SKScene {
     
     weak var coordinator: GameSceneCoordinator?
     
+    private var paddleNode: SKSpriteNode?
+    private var lastTouchLocation: CGPoint?
+    
     override func didMove(to view: SKView) {
         let backgroundNode = SKSpriteNode(imageNamed: "background.menu")
         backgroundNode.position = CGPoint(x: 0.5 * size.width, y: 0.5 * size.height)
@@ -23,9 +26,30 @@ class GameScene: SKScene {
         let paddleNode = SKSpriteNode(imageNamed: "paddle")
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
         addChild(paddleNode)
+        self.paddleNode = paddleNode
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastTouchLocation = touches.first?.location(in: self)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let firstTouchLocation = touches.first?.location(in: self) else { return }
+        touchLocation(movedTo: firstTouchLocation)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        coordinator?.gameSceneScreenTapped(self)
+        guard let firstTouchLocation = touches.first?.location(in: self) else { return }
+        touchLocation(movedTo: firstTouchLocation)
+    }
+    
+    private func touchLocation(movedTo point: CGPoint) {
+        guard let paddleNode,
+              let lastTouchLocation else { return }
+        
+        paddleNode.position = CGPoint(
+            x: paddleNode.position.x + point.x - lastTouchLocation.x,
+            y: paddleNode.position.y)
+        self.lastTouchLocation = point
     }
 }
