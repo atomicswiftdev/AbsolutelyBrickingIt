@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1D1992F2C6FEAC300CD3800 /* CGFloat+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D1992E2C6FEAC300CD3800 /* CGFloat+extension.swift */; };
 		C1E3C82D2C6BB76E0039CFED /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E3C82C2C6BB76E0039CFED /* MenuScene.swift */; };
 		C1E7F8DD2C6E6AC2004CD7BB /* AboutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7F8DC2C6E6AC2004CD7BB /* AboutScene.swift */; };
 		C1E8CB0A2C67F23A00D0ADFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8CB092C67F23A00D0ADFF /* AppDelegate.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C1D1992E2C6FEAC300CD3800 /* CGFloat+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+extension.swift"; sourceTree = "<group>"; };
 		C1E3C82C2C6BB76E0039CFED /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		C1E7F8DC2C6E6AC2004CD7BB /* AboutScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScene.swift; sourceTree = "<group>"; };
 		C1E8CB062C67F23A00D0ADFF /* AbsolutelyBrickingIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbsolutelyBrickingIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +66,7 @@
 				C1E7F8DC2C6E6AC2004CD7BB /* AboutScene.swift */,
 				C1E8CB0F2C67F23A00D0ADFF /* GameScene.swift */,
 				C1E8CB112C67F23A00D0ADFF /* GameViewController.swift */,
+				C1D1992E2C6FEAC300CD3800 /* CGFloat+extension.swift */,
 				C1E8CB132C67F23A00D0ADFF /* Main.storyboard */,
 				C1E8CB162C67F23C00D0ADFF /* Assets.xcassets */,
 				C1E8CB182C67F23C00D0ADFF /* LaunchScreen.storyboard */,
@@ -144,6 +147,7 @@
 			files = (
 				C1E8CB102C67F23A00D0ADFF /* GameScene.swift in Sources */,
 				C1E3C82D2C6BB76E0039CFED /* MenuScene.swift in Sources */,
+				C1D1992F2C6FEAC300CD3800 /* CGFloat+extension.swift in Sources */,
 				C1E7F8DD2C6E6AC2004CD7BB /* AboutScene.swift in Sources */,
 				C1E8CB122C67F23A00D0ADFF /* GameViewController.swift in Sources */,
 				C1E8CB0A2C67F23A00D0ADFF /* AppDelegate.swift in Sources */,
