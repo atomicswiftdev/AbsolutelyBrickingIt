@@ -18,6 +18,9 @@ class GameScene: SKScene {
     private var paddleNode: SKSpriteNode?
     private var lastTouchLocation: CGPoint?
     
+    private lazy var topWallSize = CGSize(width: size.width, height: 50)
+    private lazy var sideWallSize = CGSize(width: 50, height: size.height)
+    
     override func didMove(to view: SKView) {
         let backgroundNode = SKSpriteNode(imageNamed: "background.menu")
         backgroundNode.position = CGPoint(x: 0.5 * size.width, y: 0.5 * size.height)
@@ -39,19 +42,19 @@ class GameScene: SKScene {
         ballNode.physicsBody?.velocity = CGVector(dx: 0.0, dy: -200.0)
         addChild(ballNode)
         
-        let topWallNode = SKSpriteNode(color: .white, size: CGSize(width: size.width, height: 50))
+        let topWallNode = SKSpriteNode(color: .white, size: topWallSize)
         topWallNode.position = CGPoint(x: 0.5 * size.width, y: size.height - 25)
         topWallNode.physicsBody = SKPhysicsBody(rectangleOf: topWallNode.size)
         topWallNode.physicsBody?.isDynamic = false
         addChild(topWallNode)
         
-        let leftWallNode = SKSpriteNode(color: .white, size: CGSize(width: 50, height: size.height))
+        let leftWallNode = SKSpriteNode(color: .white, size: sideWallSize)
         leftWallNode.position = CGPoint(x: 25, y: 0.5 * size.height)
         leftWallNode.physicsBody = SKPhysicsBody(rectangleOf: leftWallNode.size)
         leftWallNode.physicsBody?.isDynamic = false
         addChild(leftWallNode)
         
-        let rightWallNode = SKSpriteNode(color: .white, size: CGSize(width: 50, height: size.height))
+        let rightWallNode = SKSpriteNode(color: .white, size: sideWallSize)
         rightWallNode.position = CGPoint(x: size.width - 25, y: 0.5 * size.height)
         rightWallNode.physicsBody = SKPhysicsBody(rectangleOf: rightWallNode.size)
         rightWallNode.physicsBody?.isDynamic = false
