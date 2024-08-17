@@ -26,9 +26,13 @@ class GameScene: SKScene {
         paddleNode = addPaddleNode()
         addBallNode()
         
-        addWallNode(size: topWallSize, position: CGPoint(x: 0.5 * size.width, y: size.height - 25))
-        addWallNode(size: sideWallSize, position: CGPoint(x: 25, y: 0.5 * size.height))
-        addWallNode(size: sideWallSize, position: CGPoint(x: size.width - 25, y: 0.5 * size.height))
+        let topWallPosition = CGPoint(x: 0.5 * size.width, y: size.height + 0.5 * topWallSize.height)
+        let leftWallPosition = CGPoint(x: -0.5 * sideWallSize.width, y: 0.5 * size.height)
+        let rightWallPosition = CGPoint(x: size.width + 0.5 * sideWallSize.width, y: 0.5 * size.height)
+        
+        addWallNode(size: topWallSize, position: topWallPosition)
+        addWallNode(size: sideWallSize, position: leftWallPosition)
+        addWallNode(size: sideWallSize, position: rightWallPosition)
         
         physicsWorld.gravity = .zero
     }
