@@ -27,6 +27,10 @@ class GameScene: SKScene {
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
         addChild(paddleNode)
         self.paddleNode = paddleNode
+        
+        let ballNode = SKSpriteNode(imageNamed: "ball")
+        ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
+        addChild(ballNode)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
