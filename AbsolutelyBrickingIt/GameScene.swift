@@ -38,7 +38,13 @@ class GameScene: SKScene {
         ballNode.physicsBody?.linearDamping = 0.0
         ballNode.physicsBody?.velocity = CGVector(dx: 0.0, dy: -200.0)
         addChild(ballNode)
-
+        
+        let topWallNode = SKSpriteNode(color: .white, size: CGSize(width: size.width, height: 50))
+        topWallNode.position = CGPoint(x: 0.5 * size.width, y: size.height - 25)
+        topWallNode.physicsBody = SKPhysicsBody(rectangleOf: topWallNode.size)
+        topWallNode.physicsBody?.isDynamic = false
+        addChild(topWallNode)
+        
         physicsWorld.gravity = .zero
     }
     
