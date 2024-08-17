@@ -25,12 +25,21 @@ class GameScene: SKScene {
         
         let paddleNode = SKSpriteNode(imageNamed: "paddle")
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
+        paddleNode.physicsBody = SKPhysicsBody(rectangleOf: paddleNode.size)
+        paddleNode.physicsBody?.isDynamic = false
         addChild(paddleNode)
         self.paddleNode = paddleNode
         
         let ballNode = SKSpriteNode(imageNamed: "ball")
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
+        ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
+        ballNode.physicsBody?.friction = 0.0
+        ballNode.physicsBody?.restitution = 1.0
+        ballNode.physicsBody?.linearDamping = 0.0
+        ballNode.physicsBody?.velocity = CGVector(dx: 0.0, dy: -200.0)
         addChild(ballNode)
+
+        physicsWorld.gravity = .zero
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
