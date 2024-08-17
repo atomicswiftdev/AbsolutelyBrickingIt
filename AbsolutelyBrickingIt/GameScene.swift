@@ -45,6 +45,18 @@ class GameScene: SKScene {
         topWallNode.physicsBody?.isDynamic = false
         addChild(topWallNode)
         
+        let leftWallNode = SKSpriteNode(color: .white, size: CGSize(width: 50, height: size.height))
+        leftWallNode.position = CGPoint(x: 25, y: 0.5 * size.height)
+        leftWallNode.physicsBody = SKPhysicsBody(rectangleOf: leftWallNode.size)
+        leftWallNode.physicsBody?.isDynamic = false
+        addChild(leftWallNode)
+        
+        let rightWallNode = SKSpriteNode(color: .white, size: CGSize(width: 50, height: size.height))
+        rightWallNode.position = CGPoint(x: size.width - 25, y: 0.5 * size.height)
+        rightWallNode.physicsBody = SKPhysicsBody(rectangleOf: rightWallNode.size)
+        rightWallNode.physicsBody?.isDynamic = false
+        addChild(rightWallNode)
+        
         physicsWorld.gravity = .zero
     }
     
