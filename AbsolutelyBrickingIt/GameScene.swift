@@ -8,7 +8,7 @@
 import SpriteKit
 
 protocol GameSceneCoordinator: AnyObject {
-    func gameSceneScreenTapped(_ scene: GameScene)
+    func gameSceneGameEnded(_ scene: GameScene)
 }
 
 class GameScene: SKScene {
@@ -18,23 +18,31 @@ class GameScene: SKScene {
     private var lastTouchLocation: CGPoint?
     private var paddleNode: SKSpriteNode?
     
-    private lazy var topWallSize = CGSize(width: size.width, height: 50)
-    private lazy var sideWallSize = CGSize(width: 50, height: size.height)
+    private lazy var hWallSize = CGSize(width: size.width, height: 50)
+    private lazy var vWallSize = CGSize(width: 50, height: size.height)
+    
+    private let ballCategory: UInt32 = 0x1
+    private let paddleCategory: UInt32 = 0x1 << 1
+    private let wallCategory: UInt32 = 0x1 << 2
+    private let outOfBoundsCategory: UInt32 = 0x1 << 3
     
     override func didMove(to view: SKView) {
         addBackgroundNode()
         paddleNode = addPaddleNode()
         addBallNode()
         
-        let topWallPosition = CGPoint(x: 0.5 * size.width, y: size.height + 0.5 * topWallSize.height)
-        let leftWallPosition = CGPoint(x: -0.5 * sideWallSize.width, y: 0.5 * size.height)
-        let rightWallPosition = CGPoint(x: size.width + 0.5 * sideWallSize.width, y: 0.5 * size.height)
+        let topWallPosition = CGPoint(x: 0.5 * size.width, y: size.height + 0.5 * hWallSize.height)
+        let leftWallPosition = CGPoint(x: -0.5 * vWallSize.width, y: 0.5 * size.height)
+        let rightWallPosition = CGPoint(x: size.width + 0.5 * vWallSize.width, y: 0.5 * size.height)
+        let outOfBoundsPosition = CGPoint(x: 0.5 * size.width, y: -0.5 * hWallSize.height)
         
-        addWallNode(size: topWallSize, position: topWallPosition)
-        addWallNode(size: sideWallSize, position: leftWallPosition)
-        addWallNode(size: sideWallSize, position: rightWallPosition)
+        addWallNode(size: hWallSize, position: topWallPosition)
+        addWallNode(size: vWallSize, position: leftWallPosition)
+        addWallNode(size: vWallSize, position: rightWallPosition)
+        addOutOfBoundsNode(size: hWallSize, position: outOfBoundsPosition)
         
         physicsWorld.gravity = .zero
+        physicsWorld.contactDelegate = self
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -74,17 +82,23 @@ private extension GameScene {
     
     func addPaddleNode() -> SKSpriteNode {
         let paddleNode = SKSpriteNode(imageNamed: "paddle")
+        paddleNode.name = "paddle"
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
         paddleNode.physicsBody = SKPhysicsBody(rectangleOf: paddleNode.size)
         paddleNode.physicsBody?.isDynamic = false
+        paddleNode.physicsBody?.categoryBitMask = paddleCategory
         addChild(paddleNode)
         return paddleNode
     }
     
     func addBallNode() {
         let ballNode = SKSpriteNode(imageNamed: "ball")
+        ballNode.name = "ball"
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
+        ballNode.physicsBody?.categoryBitMask = ballCategory
+        ballNode.physicsBody?.collisionBitMask = paddleCategory | wallCategory
+        ballNode.physicsBody?.contactTestBitMask = outOfBoundsCategory
         ballNode.physicsBody?.friction = 0.0
         ballNode.physicsBody?.restitution = 1.0
         ballNode.physicsBody?.linearDamping = 0.0
@@ -94,9 +108,41 @@ private extension GameScene {
     
     func addWallNode(size: CGSize, position: CGPoint) {
         let wallNode = SKSpriteNode(color: .white, size: size)
+        wallNode.name = "wall"
         wallNode.position = position
         wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallNode.size)
+        wallNode.physicsBody?.categoryBitMask = wallCategory
         wallNode.physicsBody?.isDynamic = false
         addChild(wallNode)
+    }
+    
+    func addOutOfBoundsNode(size: CGSize, position: CGPoint) {
+        let outOfBoundsNode = SKSpriteNode(color: .white, size: size)
+        outOfBoundsNode.name = "outOfBounds"
+        outOfBoundsNode.position = position
+        outOfBoundsNode.physicsBody = SKPhysicsBody(rectangleOf: outOfBoundsNode.size)
+        outOfBoundsNode.physicsBody?.categoryBitMask = outOfBoundsCategory
+        outOfBoundsNode.physicsBody?.isDynamic = false
+        addChild(outOfBoundsNode)
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node,
+              let nodeB = contact.bodyB.node else { return }
+        
+        if nodeA.name == "ball" {
+            ball(node: nodeA, collidedWith: nodeB)
+        } else if nodeB.name == "ball" {
+            ball(node: nodeB, collidedWith: nodeA)
+        }
+    }
+    
+    private func ball(node: SKNode, collidedWith other: SKNode) {
+        if other.name == "outOfBounds" {
+            coordinator?.gameSceneGameEnded(self)
+        }
     }
 }
