@@ -42,6 +42,7 @@ class GameScene: SKScene {
         addOutOfBoundsNode(size: hWallSize, position: outOfBoundsPosition)
         
         physicsWorld.gravity = .zero
+        physicsWorld.contactDelegate = self
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,6 +96,7 @@ private extension GameScene {
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
         ballNode.physicsBody?.categoryBitMask = ballCategory
         ballNode.physicsBody?.collisionBitMask = paddleCategory | wallCategory
+        ballNode.physicsBody?.contactTestBitMask = outOfBoundsCategory
         ballNode.physicsBody?.friction = 0.0
         ballNode.physicsBody?.restitution = 1.0
         ballNode.physicsBody?.linearDamping = 0.0
@@ -118,5 +120,12 @@ private extension GameScene {
         outOfBoundsNode.physicsBody?.categoryBitMask = outOfBoundsCategory
         outOfBoundsNode.physicsBody?.isDynamic = false
         addChild(outOfBoundsNode)
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("Ball and out of bounds collision")
     }
 }
