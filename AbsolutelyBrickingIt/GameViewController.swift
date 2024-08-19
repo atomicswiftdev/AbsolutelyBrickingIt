@@ -101,7 +101,7 @@ extension GameViewController: AboutSceneCoordinator {
 
 extension GameViewController: GameSceneCoordinator {
     
-    func gameSceneScreenTapped(_ scene: GameScene) {
-        present(scene: menuScene)
+    func gameSceneGameEnded(_ scene: GameScene) {
+        print("Show game over scene")
     }
 }

@@ -8,7 +8,7 @@
 import SpriteKit
 
 protocol GameSceneCoordinator: AnyObject {
-    func gameSceneScreenTapped(_ scene: GameScene)
+    func gameSceneGameEnded(_ scene: GameScene)
 }
 
 class GameScene: SKScene {
@@ -142,7 +142,7 @@ extension GameScene: SKPhysicsContactDelegate {
     
     private func ball(node: SKNode, collidedWith other: SKNode) {
         if other.name == "outOfBounds" {
-            print("Game over!")
+            coordinator?.gameSceneGameEnded(self)
         }
     }
 }
