@@ -21,6 +21,11 @@ class GameScene: SKScene {
     private lazy var hWallSize = CGSize(width: size.width, height: 50)
     private lazy var vWallSize = CGSize(width: 50, height: size.height)
     
+    private let ballCategory: UInt32 = 0x1
+    private let paddleCategory: UInt32 = 0x1 << 1
+    private let wallCategory: UInt32 = 0x1 << 2
+    private let outOfBoundsCategory: UInt32 = 0x1 << 3
+    
     override func didMove(to view: SKView) {
         addBackgroundNode()
         paddleNode = addPaddleNode()
@@ -79,6 +84,7 @@ private extension GameScene {
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
         paddleNode.physicsBody = SKPhysicsBody(rectangleOf: paddleNode.size)
         paddleNode.physicsBody?.isDynamic = false
+        paddleNode.physicsBody?.categoryBitMask = paddleCategory
         addChild(paddleNode)
         return paddleNode
     }
@@ -87,6 +93,7 @@ private extension GameScene {
         let ballNode = SKSpriteNode(imageNamed: "ball")
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
+        ballNode.physicsBody?.categoryBitMask = ballCategory
         ballNode.physicsBody?.friction = 0.0
         ballNode.physicsBody?.restitution = 1.0
         ballNode.physicsBody?.linearDamping = 0.0
@@ -98,6 +105,7 @@ private extension GameScene {
         let wallNode = SKSpriteNode(color: .white, size: size)
         wallNode.position = position
         wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallNode.size)
+        wallNode.physicsBody?.categoryBitMask = wallCategory
         wallNode.physicsBody?.isDynamic = false
         addChild(wallNode)
     }
@@ -106,6 +114,7 @@ private extension GameScene {
         let outOfBoundsNode = SKSpriteNode(color: .white, size: size)
         outOfBoundsNode.position = position
         outOfBoundsNode.physicsBody = SKPhysicsBody(rectangleOf: outOfBoundsNode.size)
+        outOfBoundsNode.physicsBody?.categoryBitMask = outOfBoundsCategory
         outOfBoundsNode.physicsBody?.isDynamic = false
         addChild(outOfBoundsNode)
     }
