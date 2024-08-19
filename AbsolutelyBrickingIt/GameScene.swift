@@ -18,21 +18,23 @@ class GameScene: SKScene {
     private var lastTouchLocation: CGPoint?
     private var paddleNode: SKSpriteNode?
     
-    private lazy var topWallSize = CGSize(width: size.width, height: 50)
-    private lazy var sideWallSize = CGSize(width: 50, height: size.height)
+    private lazy var hWallSize = CGSize(width: size.width, height: 50)
+    private lazy var vWallSize = CGSize(width: 50, height: size.height)
     
     override func didMove(to view: SKView) {
         addBackgroundNode()
         paddleNode = addPaddleNode()
         addBallNode()
         
-        let topWallPosition = CGPoint(x: 0.5 * size.width, y: size.height + 0.5 * topWallSize.height)
-        let leftWallPosition = CGPoint(x: -0.5 * sideWallSize.width, y: 0.5 * size.height)
-        let rightWallPosition = CGPoint(x: size.width + 0.5 * sideWallSize.width, y: 0.5 * size.height)
+        let topWallPosition = CGPoint(x: 0.5 * size.width, y: size.height + 0.5 * hWallSize.height)
+        let leftWallPosition = CGPoint(x: -0.5 * vWallSize.width, y: 0.5 * size.height)
+        let rightWallPosition = CGPoint(x: size.width + 0.5 * vWallSize.width, y: 0.5 * size.height)
+        let outOfBoundsPosition = CGPoint(x: 0.5 * size.width, y: 0.5 * hWallSize.height)
         
-        addWallNode(size: topWallSize, position: topWallPosition)
-        addWallNode(size: sideWallSize, position: leftWallPosition)
-        addWallNode(size: sideWallSize, position: rightWallPosition)
+        addWallNode(size: hWallSize, position: topWallPosition)
+        addWallNode(size: vWallSize, position: leftWallPosition)
+        addWallNode(size: vWallSize, position: rightWallPosition)
+        addOutOfBoundsNode(size: hWallSize, position: outOfBoundsPosition)
         
         physicsWorld.gravity = .zero
     }
@@ -98,5 +100,13 @@ private extension GameScene {
         wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallNode.size)
         wallNode.physicsBody?.isDynamic = false
         addChild(wallNode)
+    }
+    
+    func addOutOfBoundsNode(size: CGSize, position: CGPoint) {
+        let outOfBoundsNode = SKSpriteNode(color: .white, size: size)
+        outOfBoundsNode.position = position
+        outOfBoundsNode.physicsBody = SKPhysicsBody(rectangleOf: outOfBoundsNode.size)
+        outOfBoundsNode.physicsBody?.isDynamic = false
+        addChild(outOfBoundsNode)
     }
 }
