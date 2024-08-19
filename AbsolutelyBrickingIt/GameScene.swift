@@ -34,7 +34,7 @@ class GameScene: SKScene {
         let topWallPosition = CGPoint(x: 0.5 * size.width, y: size.height + 0.5 * hWallSize.height)
         let leftWallPosition = CGPoint(x: -0.5 * vWallSize.width, y: 0.5 * size.height)
         let rightWallPosition = CGPoint(x: size.width + 0.5 * vWallSize.width, y: 0.5 * size.height)
-        let outOfBoundsPosition = CGPoint(x: 0.5 * size.width, y: 0.5 * hWallSize.height)
+        let outOfBoundsPosition = CGPoint(x: 0.5 * size.width, y: -0.5 * hWallSize.height)
         
         addWallNode(size: hWallSize, position: topWallPosition)
         addWallNode(size: vWallSize, position: leftWallPosition)
