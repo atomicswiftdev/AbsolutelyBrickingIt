@@ -82,6 +82,7 @@ private extension GameScene {
     
     func addPaddleNode() -> SKSpriteNode {
         let paddleNode = SKSpriteNode(imageNamed: "paddle")
+        paddleNode.name = "paddle"
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
         paddleNode.physicsBody = SKPhysicsBody(rectangleOf: paddleNode.size)
         paddleNode.physicsBody?.isDynamic = false
@@ -92,6 +93,7 @@ private extension GameScene {
     
     func addBallNode() {
         let ballNode = SKSpriteNode(imageNamed: "ball")
+        ballNode.name = "ball"
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
         ballNode.physicsBody?.categoryBitMask = ballCategory
@@ -106,6 +108,7 @@ private extension GameScene {
     
     func addWallNode(size: CGSize, position: CGPoint) {
         let wallNode = SKSpriteNode(color: .white, size: size)
+        wallNode.name = "wall"
         wallNode.position = position
         wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallNode.size)
         wallNode.physicsBody?.categoryBitMask = wallCategory
@@ -115,6 +118,7 @@ private extension GameScene {
     
     func addOutOfBoundsNode(size: CGSize, position: CGPoint) {
         let outOfBoundsNode = SKSpriteNode(color: .white, size: size)
+        outOfBoundsNode.name = "outOfBounds"
         outOfBoundsNode.position = position
         outOfBoundsNode.physicsBody = SKPhysicsBody(rectangleOf: outOfBoundsNode.size)
         outOfBoundsNode.physicsBody?.categoryBitMask = outOfBoundsCategory
@@ -126,6 +130,19 @@ private extension GameScene {
 extension GameScene: SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
-        print("Ball and out of bounds collision")
+        guard let nodeA = contact.bodyA.node,
+              let nodeB = contact.bodyB.node else { return }
+        
+        if nodeA.name == "ball" {
+            ball(node: nodeA, collidedWith: nodeB)
+        } else if nodeB.name == "ball" {
+            ball(node: nodeB, collidedWith: nodeA)
+        }
+    }
+    
+    private func ball(node: SKNode, collidedWith other: SKNode) {
+        if other.name == "outOfBounds" {
+            print("Game over!")
+        }
     }
 }
