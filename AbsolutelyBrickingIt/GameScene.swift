@@ -94,6 +94,7 @@ private extension GameScene {
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
         ballNode.physicsBody?.categoryBitMask = ballCategory
+        ballNode.physicsBody?.collisionBitMask = paddleCategory | wallCategory
         ballNode.physicsBody?.friction = 0.0
         ballNode.physicsBody?.restitution = 1.0
         ballNode.physicsBody?.linearDamping = 0.0
