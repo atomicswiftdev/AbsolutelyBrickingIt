@@ -109,7 +109,7 @@ extension GameViewController: AboutSceneCoordinator {
 extension GameViewController: GameSceneCoordinator {
     
     func gameSceneGameEnded(_ scene: GameScene) {
-        print("Show game over scene")
+        present(scene: gameOverScene)
     }
 }
 
