@@ -73,6 +73,13 @@ private extension GameViewController {
         scene.scaleMode = .resizeFill
         return scene
     }
+    
+    var gameOverScene: GameOverScene {
+        let scene = GameOverScene(size: sceneSize)
+        scene.coordinator = self
+        scene.scaleMode = .resizeFill
+        return scene
+    }
 }
 
 // MARK: - Menu scene coordinator
@@ -103,5 +110,18 @@ extension GameViewController: GameSceneCoordinator {
     
     func gameSceneGameEnded(_ scene: GameScene) {
         print("Show game over scene")
+    }
+}
+
+// MARK: - Game Over scene coordinator
+
+extension GameViewController: GameOverSceneCoordinator {
+    
+    func gameOverSceneMenuTapped(_ scene: GameOverScene) {
+        present(scene: menuScene)
+    }
+    
+    func gameOverScenePlayTapped(_ scene: GameOverScene) {
+        present(scene: gameScene)
     }
 }
