@@ -108,8 +108,12 @@ extension GameViewController: AboutSceneCoordinator {
 
 extension GameViewController: GameSceneCoordinator {
     
-    func gameSceneGameEnded(_ scene: GameScene) {
+    func gameSceneGameLost(_ scene: GameScene) {
         present(scene: gameOverScene)
+    }
+    
+    func gameSceneGameWon(_ scene: GameScene) {
+        print("Congratulations! You Win!")
     }
 }
 

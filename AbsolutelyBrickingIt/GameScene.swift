@@ -8,7 +8,8 @@
 import SpriteKit
 
 protocol GameSceneCoordinator: AnyObject {
-    func gameSceneGameEnded(_ scene: GameScene)
+    func gameSceneGameLost(_ scene: GameScene)
+    func gameSceneGameWon(_ scene: GameScene)
 }
 
 class GameScene: SKScene {
@@ -25,6 +26,7 @@ class GameScene: SKScene {
     private let paddleCategory: UInt32 = 0x1 << 1
     private let wallCategory: UInt32 = 0x1 << 2
     private let outOfBoundsCategory: UInt32 = 0x1 << 3
+    private let brickCategory: UInt32 = 0x1 << 4
     
     override func didMove(to view: SKView) {
         addBackgroundNode()
@@ -40,6 +42,7 @@ class GameScene: SKScene {
         addWallNode(size: vWallSize, position: leftWallPosition)
         addWallNode(size: vWallSize, position: rightWallPosition)
         addOutOfBoundsNode(size: hWallSize, position: outOfBoundsPosition)
+        addBrickNode(position: CGPoint(x: 0.2 * size.width, y: 0.6 * size.height))
         
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -97,8 +100,8 @@ private extension GameScene {
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
         ballNode.physicsBody?.categoryBitMask = ballCategory
-        ballNode.physicsBody?.collisionBitMask = paddleCategory | wallCategory
-        ballNode.physicsBody?.contactTestBitMask = outOfBoundsCategory
+        ballNode.physicsBody?.collisionBitMask = paddleCategory | wallCategory | brickCategory
+        ballNode.physicsBody?.contactTestBitMask = outOfBoundsCategory | brickCategory
         ballNode.physicsBody?.friction = 0.0
         ballNode.physicsBody?.restitution = 1.0
         ballNode.physicsBody?.linearDamping = 0.0
@@ -125,6 +128,16 @@ private extension GameScene {
         outOfBoundsNode.physicsBody?.isDynamic = false
         addChild(outOfBoundsNode)
     }
+    
+    func addBrickNode(position: CGPoint) {
+        let brickNode = SKSpriteNode(imageNamed: "brick")
+        brickNode.name = "brick"
+        brickNode.position = position
+        brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
+        brickNode.physicsBody?.categoryBitMask = brickCategory
+        brickNode.physicsBody?.isDynamic = false
+        addChild(brickNode)
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -142,7 +155,10 @@ extension GameScene: SKPhysicsContactDelegate {
     
     private func ball(node: SKNode, collidedWith other: SKNode) {
         if other.name == "outOfBounds" {
-            coordinator?.gameSceneGameEnded(self)
+            coordinator?.gameSceneGameLost(self)
+        } else if other.name == "brick" {
+            other.removeFromParent()
+            coordinator?.gameSceneGameWon(self)
         }
     }
 }
