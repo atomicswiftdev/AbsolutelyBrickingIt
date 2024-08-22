@@ -80,6 +80,13 @@ private extension GameViewController {
         scene.scaleMode = .resizeFill
         return scene
     }
+    
+    var gameCompleteScene: GameCompleteScene {
+        let scene = GameCompleteScene(size: sceneSize)
+        scene.coordinator = self
+        scene.scaleMode = .resizeFill
+        return scene
+    }
 }
 
 // MARK: - Menu scene coordinator
@@ -113,7 +120,7 @@ extension GameViewController: GameSceneCoordinator {
     }
     
     func gameSceneGameWon(_ scene: GameScene) {
-        print("Congratulations! You Win!")
+        present(scene: gameCompleteScene)
     }
 }
 
@@ -126,6 +133,19 @@ extension GameViewController: GameOverSceneCoordinator {
     }
     
     func gameOverScenePlayTapped(_ scene: GameOverScene) {
+        present(scene: gameScene)
+    }
+}
+
+// MARK: - Game Complete scene coordinator
+
+extension GameViewController: GameCompleteSceneCoordinator {
+    
+    func gameCompleteSceneMenuTapped(_ scene: GameCompleteScene) {
+        present(scene: menuScene)
+    }
+    
+    func gameCompleteScenePlayTapped(_ scene: GameCompleteScene) {
         present(scene: gameScene)
     }
 }
