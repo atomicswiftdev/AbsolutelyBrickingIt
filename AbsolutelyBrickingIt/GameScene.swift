@@ -8,7 +8,8 @@
 import SpriteKit
 
 protocol GameSceneCoordinator: AnyObject {
-    func gameSceneGameEnded(_ scene: GameScene)
+    func gameSceneGameLost(_ scene: GameScene)
+    func gameSceneGameWon(_ scene: GameScene)
 }
 
 class GameScene: SKScene {
@@ -154,9 +155,10 @@ extension GameScene: SKPhysicsContactDelegate {
     
     private func ball(node: SKNode, collidedWith other: SKNode) {
         if other.name == "outOfBounds" {
-            coordinator?.gameSceneGameEnded(self)
+            coordinator?.gameSceneGameLost(self)
         } else if other.name == "brick" {
             other.removeFromParent()
+            coordinator?.gameSceneGameWon(self)
         }
     }
 }
