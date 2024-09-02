@@ -22,12 +22,6 @@ class GameScene: SKScene {
     private lazy var hWallSize = CGSize(width: size.width, height: 50)
     private lazy var vWallSize = CGSize(width: 50, height: size.height)
     
-    private let ballCategory: UInt32 = 0x1
-    private let paddleCategory: UInt32 = 0x1 << 1
-    private let wallCategory: UInt32 = 0x1 << 2
-    private let outOfBoundsCategory: UInt32 = 0x1 << 3
-    private let brickCategory: UInt32 = 0x1 << 4
-    
     override func didMove(to view: SKView) {
         addBackgroundNode()
         paddleNode = addPaddleNode()
@@ -89,7 +83,7 @@ private extension GameScene {
         paddleNode.position = CGPoint(x: 0.5 * size.width, y: 0.1 * size.height)
         paddleNode.physicsBody = SKPhysicsBody(rectangleOf: paddleNode.size)
         paddleNode.physicsBody?.isDynamic = false
-        paddleNode.physicsBody?.categoryBitMask = paddleCategory
+        paddleNode.physicsBody?.categoryBitMask = PhysicsCategory.paddle
         addChild(paddleNode)
         return paddleNode
     }
@@ -99,9 +93,9 @@ private extension GameScene {
         ballNode.name = "ball"
         ballNode.position = CGPoint(x: 0.5 * size.width, y: 0.2 * size.height)
         ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width * 0.5)
-        ballNode.physicsBody?.categoryBitMask = ballCategory
-        ballNode.physicsBody?.collisionBitMask = paddleCategory | wallCategory | brickCategory
-        ballNode.physicsBody?.contactTestBitMask = outOfBoundsCategory | brickCategory
+        ballNode.physicsBody?.categoryBitMask = PhysicsCategory.ball
+        ballNode.physicsBody?.collisionBitMask = PhysicsCategory.paddle | PhysicsCategory.wall | PhysicsCategory.brick
+        ballNode.physicsBody?.contactTestBitMask = PhysicsCategory.outOfBounds | PhysicsCategory.brick
         ballNode.physicsBody?.friction = 0.0
         ballNode.physicsBody?.restitution = 1.0
         ballNode.physicsBody?.linearDamping = 0.0
@@ -114,7 +108,7 @@ private extension GameScene {
         wallNode.name = "wall"
         wallNode.position = position
         wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallNode.size)
-        wallNode.physicsBody?.categoryBitMask = wallCategory
+        wallNode.physicsBody?.categoryBitMask = PhysicsCategory.wall
         wallNode.physicsBody?.isDynamic = false
         addChild(wallNode)
     }
@@ -124,7 +118,7 @@ private extension GameScene {
         outOfBoundsNode.name = "outOfBounds"
         outOfBoundsNode.position = position
         outOfBoundsNode.physicsBody = SKPhysicsBody(rectangleOf: outOfBoundsNode.size)
-        outOfBoundsNode.physicsBody?.categoryBitMask = outOfBoundsCategory
+        outOfBoundsNode.physicsBody?.categoryBitMask = PhysicsCategory.outOfBounds
         outOfBoundsNode.physicsBody?.isDynamic = false
         addChild(outOfBoundsNode)
     }
@@ -134,7 +128,7 @@ private extension GameScene {
         brickNode.name = "brick"
         brickNode.position = position
         brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
-        brickNode.physicsBody?.categoryBitMask = brickCategory
+        brickNode.physicsBody?.categoryBitMask = PhysicsCategory.brick
         brickNode.physicsBody?.isDynamic = false
         addChild(brickNode)
     }

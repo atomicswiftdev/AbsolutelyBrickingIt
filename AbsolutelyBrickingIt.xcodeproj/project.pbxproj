@@ -10,6 +10,7 @@
 		C1B6D5632C73D7C000B26A35 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B6D5622C73D7C000B26A35 /* GameOverScene.swift */; };
 		C1C273642C77E0A500A31FA0 /* GameCompleteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C273632C77E0A500A31FA0 /* GameCompleteScene.swift */; };
 		C1D1992F2C6FEAC300CD3800 /* CGFloat+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D1992E2C6FEAC300CD3800 /* CGFloat+extension.swift */; };
+		C1DF41082C8661070031B662 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DF41072C8661070031B662 /* PhysicsCategory.swift */; };
 		C1E3C82D2C6BB76E0039CFED /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E3C82C2C6BB76E0039CFED /* MenuScene.swift */; };
 		C1E7F8DD2C6E6AC2004CD7BB /* AboutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7F8DC2C6E6AC2004CD7BB /* AboutScene.swift */; };
 		C1E8CB0A2C67F23A00D0ADFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8CB092C67F23A00D0ADFF /* AppDelegate.swift */; };
@@ -24,6 +25,7 @@
 		C1B6D5622C73D7C000B26A35 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		C1C273632C77E0A500A31FA0 /* GameCompleteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCompleteScene.swift; sourceTree = "<group>"; };
 		C1D1992E2C6FEAC300CD3800 /* CGFloat+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+extension.swift"; sourceTree = "<group>"; };
+		C1DF41072C8661070031B662 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
 		C1E3C82C2C6BB76E0039CFED /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		C1E7F8DC2C6E6AC2004CD7BB /* AboutScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScene.swift; sourceTree = "<group>"; };
 		C1E8CB062C67F23A00D0ADFF /* AbsolutelyBrickingIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbsolutelyBrickingIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +75,7 @@
 				C1C273632C77E0A500A31FA0 /* GameCompleteScene.swift */,
 				C1E8CB112C67F23A00D0ADFF /* GameViewController.swift */,
 				C1D1992E2C6FEAC300CD3800 /* CGFloat+extension.swift */,
+				C1DF41072C8661070031B662 /* PhysicsCategory.swift */,
 				C1E8CB132C67F23A00D0ADFF /* Main.storyboard */,
 				C1E8CB162C67F23C00D0ADFF /* Assets.xcassets */,
 				C1E8CB182C67F23C00D0ADFF /* LaunchScreen.storyboard */,
@@ -154,6 +157,7 @@
 				C1E8CB102C67F23A00D0ADFF /* GameScene.swift in Sources */,
 				C1E3C82D2C6BB76E0039CFED /* MenuScene.swift in Sources */,
 				C1B6D5632C73D7C000B26A35 /* GameOverScene.swift in Sources */,
+				C1DF41082C8661070031B662 /* PhysicsCategory.swift in Sources */,
 				C1C273642C77E0A500A31FA0 /* GameCompleteScene.swift in Sources */,
 				C1D1992F2C6FEAC300CD3800 /* CGFloat+extension.swift in Sources */,
 				C1E7F8DD2C6E6AC2004CD7BB /* AboutScene.swift in Sources */,
