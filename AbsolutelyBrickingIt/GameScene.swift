@@ -18,6 +18,7 @@ class GameScene: SKScene {
     
     private var lastTouchLocation: CGPoint?
     private var paddleNode: SKSpriteNode?
+    private var bricksNode: SKNode?
     
     private lazy var hWallSize = CGSize(width: size.width, height: 50)
     private lazy var vWallSize = CGSize(width: 50, height: size.height)
@@ -36,7 +37,7 @@ class GameScene: SKScene {
         addWallNode(size: vWallSize, position: leftWallPosition)
         addWallNode(size: vWallSize, position: rightWallPosition)
         addOutOfBoundsNode(size: hWallSize, position: outOfBoundsPosition)
-        addBrickNode(position: CGPoint(x: 0.2 * size.width, y: 0.6 * size.height))
+        bricksNode = addBricksNode()
         
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -123,14 +124,23 @@ private extension GameScene {
         addChild(outOfBoundsNode)
     }
     
-    func addBrickNode(position: CGPoint) {
+    func addBricksNode() -> SKNode {
+        let bricksNode = SKNode()
+        addChild(bricksNode)
+        addBrickNode(to: bricksNode, position: CGPoint(x: 0.2 * size.width, y: 0.6 * size.height))
+        addBrickNode(to: bricksNode, position: CGPoint(x: 0.5 * size.width, y: 0.6 * size.height))
+        addBrickNode(to: bricksNode, position: CGPoint(x: 0.8 * size.width, y: 0.6 * size.height))
+        return bricksNode
+    }
+    
+    func addBrickNode(to parentNode: SKNode, position: CGPoint) {
         let brickNode = SKSpriteNode(imageNamed: "brick")
         brickNode.name = "brick"
         brickNode.position = position
         brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
         brickNode.physicsBody?.categoryBitMask = PhysicsCategory.brick
         brickNode.physicsBody?.isDynamic = false
-        addChild(brickNode)
+        parentNode.addChild(brickNode)
     }
 }
 
@@ -151,7 +161,14 @@ extension GameScene: SKPhysicsContactDelegate {
         if other.name == "outOfBounds" {
             coordinator?.gameSceneGameLost(self)
         } else if other.name == "brick" {
-            other.removeFromParent()
+            hit(brick: other)
+        }
+    }
+    
+    private func hit(brick: SKNode) {
+        brick.removeFromParent()
+        
+        if bricksNode?.children.count == 0 {
             coordinator?.gameSceneGameWon(self)
         }
     }
