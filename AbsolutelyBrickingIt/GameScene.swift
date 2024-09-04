@@ -112,22 +112,28 @@ private extension GameScene {
         let bricksNode = SKNode()
         bricksNode.position = CGPoint(x: 0.5 * size.width, y: 0.5 * size.height)
         addChild(bricksNode)
-        let bricks = "------"
-        for (index, brick) in bricks.enumerated() {
-            addBrickNode(to: bricksNode, totalColumns: bricks.count, column: index)
+        let bricks = [
+            "------",
+            "-------",
+            "------",
+            "-------"
+        ]
+        for (rowIndex, rowValue) in bricks.enumerated() {
+            for (colIndex, brickValue) in rowValue.enumerated() {
+                addBrickNode(to: bricksNode, totalColumns: rowValue.count, column: colIndex, row: rowIndex)
+            }
         }
         return bricksNode
     }
     
-    func addBrickNode(to parentNode: SKNode, totalColumns: Int, column: Int) {
+    func addBrickNode(to parentNode: SKNode, totalColumns: Int, column: Int, row: Int) {
         let brickNode = SKSpriteNode(imageNamed: "brick")
         brickNode.name = "brick"
         let gapSize = 3
-        let totalGap = (totalColumns - 1) * gapSize
-        let totalWidth = CGFloat(totalColumns) * brickNode.size.width + CGFloat(totalGap)
+        let totalWidth = CGFloat(totalColumns) * (brickNode.size.width + CGFloat(gapSize)) - CGFloat(gapSize)
         let startX = 0.5 * (brickNode.size.width - totalWidth)
         let x = startX + CGFloat(column) * (brickNode.size.width + CGFloat(gapSize))
-        let y = 0.0
+        let y = CGFloat(row) * (brickNode.size.height + CGFloat(gapSize))
         brickNode.position = CGPoint(x: x, y: y)
         brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
         brickNode.physicsBody?.categoryBitMask = PhysicsCategory.brick
